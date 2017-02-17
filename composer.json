@@ -1,0 +1,28 @@
+{
+  "name": "opvangdatabasenl/apiclient",
+  "description": "A client for the OpvangDatabase.nl API",
+  "keywords": [
+    "opvangdatabase",
+    "API",
+    "client"
+  ],
+  "homepage": "https://github.com/OpvangDatabaseNL/APIclient",
+  "license": "CC-BY-NC-4.0",
+  "authors": [
+    {
+      "name": "Rutger Kirkels",
+      "email": "r.kirkels@expanet.nl",
+      "homepage": "http://rutger.kirkels.nl",
+      "role": "Lead Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "ext-curl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "OpvangDatabaseNL\\APIclient\\": "src/"
+    }
+  }
+}
