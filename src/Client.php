@@ -3,17 +3,90 @@
 
 namespace OpvangDatabaseNL\APIclient;
 use OpvangDatabaseNL\APIclient\Connector;
+use OpvangDatabaseNL\APIclient\models\ApiResponse;
+use OpvangDatabaseNL\APIclient\models\Location;
+use OpvangDatabaseNL\APIclient\models\SearchTask;
+
+define('VERSION', '1.0.0');
 
 class Client
 {
     protected $connector = null;
+    protected $message = null;
+    public $apiKey = null;
+    private static $instance = null;
+
+    public static function init($apiKey = NULL)
+    {
+        $class = get_class(self::$instance);
+        if (!self::$instance)
+        {
+            self::$instance = new $class($apiKey);
+        }
+        return self::$instance;
+    }
 
     public function __construct($apiKey = null)
     {
         $this->apiKey = $apiKey;
+        $this->connector = new Connector($apiKey);
+        $this->message = new \OpvangDatabaseNL\APIclient\models\ApiMessage();
     }
 
+
     public function getLocation($locationId) {
-        $this->connector = Connector::class;
+        $this->message->setEndPoint('locations');
+        $this->message->setId($locationId);
+        $this->connector->setMessage($this->message);
+        if ($this->connector->execute()) {
+            $location = LocationFactory::load($this->connector->getResponse()->getBody());
+            return $location;
+        }
+        return false;
     }
+
+    public function getNewestLocations($max = null) {
+        $this->message->setEndPoint('locations/newest/'.$max);
+        $this->connector->setMessage($this->message);
+        if ($this->connector->execute()) {
+            $locations = [];
+            foreach($this->connector->getResponse()->getBody() as $locationData) {
+                $locations[] = LocationFactory::load($locationData);
+            }
+            return $locations;
+        }
+
+        return false;
+    }
+
+    public function search(SearchTask $searchTask) {
+        $searchParams = [];
+        foreach ($searchTask->getSearchParameters() as $searchParameter => $value) {
+            if (!empty($value)) {
+                $searchParams[$searchParameter] = $value;
+            }
+        }
+        if (count($searchParams) === 0) {
+            return false;
+        }
+
+        $this->message->setEndPoint('search/locations');
+
+        if (count($searchParams) > 0) {
+            foreach ($searchParams as $name => $value) {
+                $this->message->setData($name, $value);
+            }
+        }
+        $this->connector->setMessage($this->message);
+        if ($this->connector->execute()) {
+            $locations = [];
+
+            foreach($this->connector->getResponse()->getBody() as $locationData) {
+                $locations[] = LocationFactory::load($locationData);
+            }
+            return $locations;
+        }
+        return false;
+    }
+
 }
