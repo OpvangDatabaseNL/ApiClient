@@ -117,4 +117,19 @@ class Client
         return $cities;
     }
 
+    public function getLocationByTypeAndCity($type, $city) {
+        $this->message->setEndPoint('cities/' . $city . '/' . $type);
+        $this->connector->setMessage($this->message);
+        $locations = [];
+        if ($this->connector->execute()) {
+            foreach($this->connector->getResponse()->getBody() as $locationData) {
+                $location = new Location\Short\Location();
+                $location->load($locationData);
+                $locations[] = $location;
+            }
+            return $locations;
+        }
+        return false;
+    }
+
 }

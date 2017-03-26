@@ -4,7 +4,7 @@ namespace OpvangDatabaseNL\APIclient;
 
 use OpvangDatabaseNL\APIclient\models\ApiResponse;
 
-define('APIHOST', 'api2.opvangdatabase.nl');
+define('APIHOST', 'https://api2.opvangdatabase.nl');
 
 class Connector
 {
@@ -63,7 +63,7 @@ class Connector
         if ($this->method === 'get' && count($this->apiMessage->getData()) > 0) {
             $url .= '?' . http_build_query($this->apiMessage->getData());
         }
-
+        
         $ch = curl_init();
 
         curl_setopt_array($ch, array(
