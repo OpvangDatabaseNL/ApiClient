@@ -4,7 +4,7 @@ namespace OpvangDatabaseNL\APIclient;
 
 use OpvangDatabaseNL\APIclient\models\ApiResponse;
 
-define('APIHOST', 'api.opvangdatabase.nl');
+define('APIHOST', 'api2.opvangdatabase.nl');
 
 class Connector
 {
@@ -15,6 +15,7 @@ class Connector
     protected $response = null;
     protected $numberOfCalls = 0;
     protected $method = 'get';
+    protected $queryVars = [];
 
     public function __construct($apiKey = null)
     {
@@ -35,12 +36,19 @@ class Connector
         $this->apiMessage = $apiMessage;
     }
 
-    public function addHeader($name, $value) {
-        $this->headers[$name] = $value;
+    public function setQueryVars(array $queryVars) {
+        foreach ($queryVars as $key => $value) {
+            if (is_array($value)) {
+                return false;
+            }
+            $this->setQueryVar($key, $value);
+        }
+        return true;
     }
 
     public function execute() {
         $this->apiMessage->addHeader('apiKey', $this->apiKey);
+
 //        var_dump($this->apiMessage);die;
         $url = APIHOST . '/' . $this->apiMessage->getEndPoint();
 

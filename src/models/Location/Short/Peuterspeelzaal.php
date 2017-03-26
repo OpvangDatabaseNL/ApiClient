@@ -1,15 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rutgerkirkels
- * Date: 25-03-17
- * Time: 22:09
- */
 
-namespace OpvangDatabaseNL\models\Location\Short;
+namespace OpvangDatabaseNL\APIclient\models\Location\Short;
 
 
-class Peuterspeelzaal
+class Peuterspeelzaal extends Location
 {
+    protected $slots;
+
+    /**
+     * @return mixed
+     */
+    public function getSlots()
+    {
+        return $this->slots;
+    }
+
 
 }

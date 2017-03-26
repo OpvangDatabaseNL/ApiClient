@@ -5,6 +5,7 @@ namespace OpvangDatabaseNL\APIclient;
 use OpvangDatabaseNL\APIclient\Connector;
 use OpvangDatabaseNL\APIclient\models\ApiResponse;
 use OpvangDatabaseNL\APIclient\models\Location;
+use OpvangDatabaseNL\APIclient\models\ResponseOrder;
 use OpvangDatabaseNL\APIclient\models\SearchTask;
 
 define('VERSION', '1.0.0');
@@ -45,21 +46,30 @@ class Client
         return false;
     }
 
-    public function getNewestLocations($max = null) {
+    public function getNewestLocations($max = 10, ResponseOrder $order = null) {
         $this->message->setEndPoint('locations/newest/'.$max);
+
+        if (!empty($order)) {
+            $this->message->setData('orderBy',$order->getField());
+            $this->message->setData('order', $order->getOrder());
+        }
+
         $this->connector->setMessage($this->message);
+
         if ($this->connector->execute()) {
             $locations = [];
             foreach($this->connector->getResponse()->getBody() as $locationData) {
-                $locations[] = LocationFactory::load($locationData);
+
+                $locations[] = LocationFactory::loadShort($locationData);
             }
+
             return $locations;
         }
 
         return false;
     }
 
-    public function search(SearchTask $searchTask) {
+    public function search(SearchTask $searchTask, ResponseOrder $order = null) {
         $searchParams = [];
         foreach ($searchTask->getSearchParameters() as $searchParameter => $value) {
             if (!empty($value)) {
@@ -72,6 +82,11 @@ class Client
 
         $this->message->setEndPoint('search/locations');
 
+        if (!empty($order)) {
+            $this->message->setData('orderBy',$order->getField());
+            $this->message->setData('order', $order->getOrder());
+        }
+
         if (count($searchParams) > 0) {
             foreach ($searchParams as $name => $value) {
                 $this->message->setData($name, $value);
@@ -82,7 +97,8 @@ class Client
             $locations = [];
 
             foreach($this->connector->getResponse()->getBody() as $locationData) {
-                $locations[] = LocationFactory::load($locationData);
+
+                $locations[] = LocationFactory::loadShort($locationData);
             }
             return $locations;
         }

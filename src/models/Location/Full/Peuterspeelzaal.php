@@ -1,6 +1,6 @@
 <?php
 
-namespace OpvangDatabaseNL\APIclient\models;
+namespace OpvangDatabaseNL\APIclient\models\Location\Full;
 
 
 class Peuterspeelzaal extends Location

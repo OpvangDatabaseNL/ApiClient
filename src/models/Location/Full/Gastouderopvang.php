@@ -1,20 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rutgerkirkels
- * Date: 18-02-17
- * Time: 12:31
- */
 
-namespace OpvangDatabaseNL\APIclient\models;
+namespace OpvangDatabaseNL\APIclient\models\Location\Full;
 
 use OpvangDatabaseNL\APIclient\Client;
 use OpvangDatabaseNL\APIclient\Connector;
 use OpvangDatabaseNL\APIclient\LocationFactory;
 
-class GastouderOpvang extends Location
+class Gastouderopvang extends Location
 {
-    protected $lrkId = null;
+    protected $lrk = null;
     protected $slots = null;
 
     public function getRelations() {

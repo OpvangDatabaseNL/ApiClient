@@ -6,10 +6,19 @@
  * Time: 22:08
  */
 
-namespace OpvangDatabaseNL\models\Location\Short;
+namespace OpvangDatabaseNL\APIclient\models\Location\Short;
 
-
-class Gastouderbureau
+class Gastouderbureau extends Location
 {
+    protected $lrk;
+
+    /**
+     * @return mixed
+     */
+    public function getLrk()
+    {
+        return $this->lrk;
+    }
+
 
 }

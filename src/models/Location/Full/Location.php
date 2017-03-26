@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rutgerkirkels
- * Date: 18-02-17
- * Time: 09:18
- */
 
-namespace OpvangDatabaseNL\APIclient\models;
+namespace OpvangDatabaseNL\APIclient\models\Location\Full;
 
 
 use OpvangDatabaseNL\APIclient\Client;
@@ -18,17 +12,13 @@ class Location
     protected $id = null;
     protected $name = null;
     protected $type = null;
-    protected $registerStart = null;
-    protected $registerStatus = null;
+    protected $registration;
     protected $municipality = null;
-    protected $contactEmail = null;
-    protected $contactTelephone = null;
     protected $address = null;
     protected $postalCode = null;
     protected $city = null;
-    protected $website = null;
-    protected $latitude = null;
-    protected $longitude = null;
+    protected $contact;
+    protected $coordinates;
 
     public function __construct()
     {
@@ -56,10 +46,17 @@ class Location
     }
 
     public function getRegisterStartDate($format = 'd-m-Y') {
-
-        $timestamp = new \DateTime($this->registerStart->date);
+        $timestamp = new \DateTime($this->registration->start);
         return $timestamp->format($format);
     }
 
+    public function getRegisterEndDate($format = 'd-m-Y') {
+        if (!property_exists($this->registration,'end')) {
+            return false;
+        } else {
+            $timestamp = new \DateTime($this->registration->end);
+            return $timestamp->format($format);
+        }
+    }
 
 }

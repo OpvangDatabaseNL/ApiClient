@@ -1,15 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rutgerkirkels
- * Date: 25-03-17
- * Time: 22:09
- */
 
-namespace OpvangDatabaseNL\models\Location\Short;
+namespace OpvangDatabaseNL\APIclient\models\Location\Short;
 
 
-class Bso
+class Bso extends Location
 {
+    protected $lrk;
+    protected $slots;
+
+    /**
+     * @return mixed
+     */
+    public function getLrk()
+    {
+        return $this->lrk;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlots()
+    {
+        return $this->slots;
+    }
+
 
 }
