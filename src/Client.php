@@ -132,4 +132,16 @@ class Client
         return false;
     }
 
+    public function getDataFromEndpoint($endPoint) {
+        $this->message->setEndPoint($endPoint);
+        $this->connector->setMessage($this->message);
+        $data=[];
+        if ($this->connector->execute()) {
+            foreach($this->connector->getResponse()->getBody() as $receivedData) {
+                $data[] = $receivedData;
+            }
+            return $data;
+        }
+        return false;
+    }
 }
