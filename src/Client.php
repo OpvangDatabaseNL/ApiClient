@@ -105,4 +105,16 @@ class Client
         return false;
     }
 
+    public function getCities() {
+        $this->message->setEndPoint('cities');
+        $this->connector->setMessage($this->message);
+        $cities = [];
+        if ($this->connector->execute()) {
+            foreach($this->connector->getResponse()->getBody() as $city) {
+                $cities[] = $city;
+            }
+        }
+        return $cities;
+    }
+
 }
