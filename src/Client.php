@@ -123,8 +123,7 @@ class Client
         $locations = [];
         if ($this->connector->execute()) {
             foreach($this->connector->getResponse()->getBody() as $locationData) {
-                $location = new Location\Short\Location();
-                $location->load($locationData);
+                $location = LocationFactory::loadShort($locationData);
                 $locations[] = $location;
             }
             return $locations;
