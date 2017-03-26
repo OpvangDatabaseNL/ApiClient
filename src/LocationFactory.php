@@ -13,7 +13,7 @@ class LocationFactory
                 $obj->load($locationData);
                 break;
 
-            case 'buitenschoolse opvang':
+            case 'bso':
                 $obj = new \OpvangDatabaseNL\APIclient\models\Location\Full\Bso();
                 $obj->load($locationData);
                 break;
