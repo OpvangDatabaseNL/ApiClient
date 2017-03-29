@@ -19,6 +19,7 @@ class Location
     protected $city = null;
     protected $contact;
     protected $coordinates;
+    protected $videos;
 
     public function __construct()
     {
@@ -58,5 +59,13 @@ class Location
             return $timestamp->format($format);
         }
     }
+
+    public function hasVideos() {
+        if ($this->videos > 0) {
+            return true;
+        }
+        return false;
+    }
+
 
 }
