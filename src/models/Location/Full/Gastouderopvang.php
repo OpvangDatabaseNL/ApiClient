@@ -8,7 +8,7 @@ use OpvangDatabaseNL\APIclient\LocationFactory;
 
 class Gastouderopvang extends Location
 {
-    protected $lrk = null;
+    protected $lrkId = null;
     protected $slots = null;
 
     public function getRelations() {
