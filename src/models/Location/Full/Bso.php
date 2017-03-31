@@ -5,6 +5,6 @@ namespace OpvangDatabaseNL\APIclient\models\Location\Full;
 
 class Bso extends Location
 {
-    protected $lrkId = null;
+    protected $lrk = null;
     protected $slots = null;
 }
