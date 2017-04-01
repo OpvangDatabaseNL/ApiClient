@@ -21,6 +21,7 @@ class Location
     protected $coordinates;
     protected $videos;
     protected $website;
+    protected $socialMedia;
 
     public function __construct()
     {
