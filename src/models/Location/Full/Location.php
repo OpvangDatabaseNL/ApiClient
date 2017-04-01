@@ -20,6 +20,7 @@ class Location
     protected $contact;
     protected $coordinates;
     protected $videos;
+    protected $website;
 
     public function __construct()
     {

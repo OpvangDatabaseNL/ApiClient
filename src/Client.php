@@ -143,4 +143,18 @@ class Client
         }
         return false;
     }
+
+    public function getRelations($locationId) {
+        $this->message->setEndPoint('locations/' . $locationId . '/relations');
+        $this->connector->setMessage($this->message);
+        $locations = [];
+        if ($this->connector->execute()) {
+            foreach($this->connector->getResponse()->getBody() as $locationData) {
+                $location = LocationFactory::loadShort($locationData);
+                $locations[] = $location;
+            }
+            return $locations;
+        }
+        return false;
+    }
 }
