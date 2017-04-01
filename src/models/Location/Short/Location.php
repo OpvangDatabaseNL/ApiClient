@@ -195,16 +195,15 @@ class Location
     }
 
     public function getRegisterStartDate($format = 'd-m-Y') {
-        $timestamp = new \DateTime($this->registration->start);
+        $timestamp = new \DateTime($this->registerStart);
         return $timestamp->format($format);
     }
 
     public function getRegisterEndDate($format = 'd-m-Y') {
-        if (!property_exists($this->registration,'end')) {
-            return false;
-        } else {
-            $timestamp = new \DateTime($this->registration->end);
+        if (!empty($this->registerEnd)) {
+            $timestamp = new \DateTime($this->registerEnd);
             return $timestamp->format($format);
         }
+        return $this->registerEnd;
     }
 }
