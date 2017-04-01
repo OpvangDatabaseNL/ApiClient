@@ -195,13 +195,13 @@ class Location
     }
 
     public function getRegisterStartDate($format = 'd-m-Y') {
-        $timestamp = new \DateTime($this->registerStart);
+        $timestamp = new \DateTime($this->registerStart->date);
         return $timestamp->format($format);
     }
 
     public function getRegisterEndDate($format = 'd-m-Y') {
         if (!empty($this->registerEnd)) {
-            $timestamp = new \DateTime($this->registerEnd);
+            $timestamp = new \DateTime($this->registerEnd->date);
             return $timestamp->format($format);
         }
         return $this->registerEnd;
