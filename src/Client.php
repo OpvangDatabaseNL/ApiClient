@@ -4,6 +4,7 @@
 namespace OpvangDatabaseNL\APIclient;
 use OpvangDatabaseNL\APIclient\Connector;
 use OpvangDatabaseNL\APIclient\models\ApiResponse;
+use OpvangDatabaseNL\APIclient\models\InspectionReport;
 use OpvangDatabaseNL\APIclient\models\Location;
 use OpvangDatabaseNL\APIclient\models\ResponseOrder;
 use OpvangDatabaseNL\APIclient\models\SearchTask;
@@ -154,6 +155,21 @@ class Client
                 $locations[] = $location;
             }
             return $locations;
+        }
+        return false;
+    }
+
+    public function getInspectionReports($locationId) {
+        $this->message->setEndPoint('locations/' . $locationId . '/inspectionreports');
+        $this->connector->setMessage($this->message);
+        $reports = [];
+        if ($this->connector->execute()) {
+            foreach($this->connector->getResponse()->getBody() as $reportData) {
+                $report = new InspectionReport();
+                $report->load($reportData);
+                $reports[] = $report;
+            }
+            return $reports;
         }
         return false;
     }
