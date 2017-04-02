@@ -8,6 +8,7 @@ use OpvangDatabaseNL\APIclient\models\InspectionReport;
 use OpvangDatabaseNL\APIclient\models\Location;
 use OpvangDatabaseNL\APIclient\models\ResponseOrder;
 use OpvangDatabaseNL\APIclient\models\SearchTask;
+use OpvangDatabaseNL\APIclient\models\Video;
 
 define('VERSION', '1.0.0');
 
@@ -170,6 +171,21 @@ class Client
                 $reports[] = $report;
             }
             return $reports;
+        }
+        return false;
+    }
+
+    public function getVideos($locationId) {
+        $this->message->setEndPoint('locations/' . $locationId . '/video');
+        $this->connector->setMessage($this->message);
+        $videos = [];
+        if ($this->connector->execute()) {
+            foreach($this->connector->getResponse()->getBody() as $reportData) {
+                $video = new Video();
+                $video->load($reportData);
+                $videos[] = $video;
+            }
+            return $videos;
         }
         return false;
     }
