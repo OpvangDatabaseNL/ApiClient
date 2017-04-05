@@ -3,6 +3,7 @@
 
 namespace OpvangDatabaseNL\APIclient;
 use OpvangDatabaseNL\APIclient\Connector;
+use OpvangDatabaseNL\APIclient\models\ApiMessage;
 use OpvangDatabaseNL\APIclient\models\ApiResponse;
 use OpvangDatabaseNL\APIclient\models\InspectionReport;
 use OpvangDatabaseNL\APIclient\models\Location;
@@ -147,8 +148,9 @@ class Client
     }
 
     public function getRelations($locationId) {
-        $this->message->setEndPoint('locations/' . $locationId . '/relations');
-        $this->connector->setMessage($this->message);
+        $message = new ApiMessage();
+        $message->setEndPoint('locations/' . $locationId . '/relations');
+        $this->connector->setMessage($message);
         $locations = [];
         if ($this->connector->execute()) {
             foreach($this->connector->getResponse()->getBody() as $locationData) {
@@ -161,8 +163,9 @@ class Client
     }
 
     public function getInspectionReports($locationId) {
-        $this->message->setEndPoint('locations/' . $locationId . '/inspectionreports');
-        $this->connector->setMessage($this->message);
+        $message = new ApiMessage();
+        $message->setEndPoint('locations/' . $locationId . '/inspectionreports');
+        $this->connector->setMessage($message);
         $reports = [];
         if ($this->connector->execute()) {
             foreach($this->connector->getResponse()->getBody() as $reportData) {
@@ -176,8 +179,9 @@ class Client
     }
 
     public function getVideos($locationId) {
-        $this->message->setEndPoint('locations/' . $locationId . '/video');
-        $this->connector->setMessage($this->message);
+        $message = new ApiMessage();
+        $message->setEndPoint('locations/' . $locationId . '/video');
+        $this->connector->setMessage($message);
         $videos = [];
         if ($this->connector->execute()) {
             foreach($this->connector->getResponse()->getBody() as $reportData) {
