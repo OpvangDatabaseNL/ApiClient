@@ -6,6 +6,7 @@ namespace OpvangDatabaseNL\APIclient\models\Location\Full;
 use OpvangDatabaseNL\APIclient\Client;
 use OpvangDatabaseNL\APIclient\Connector;
 use OpvangDatabaseNL\APIclient\Helper;
+use OpvangDatabaseNL\APIclient\models\BusinessHours;
 
 class Location
 {
@@ -22,6 +23,7 @@ class Location
     protected $videos;
     protected $website;
     protected $socialMedia;
+    protected $businessHours;
 
     public function __construct()
     {
@@ -69,5 +71,12 @@ class Location
         return false;
     }
 
+    public function getBusinessHours() {
+        if (empty($this->businessHours)) {
+            return false;
+        }
+        return new BusinessHours($this->businessHours);
+
+    }
 
 }
