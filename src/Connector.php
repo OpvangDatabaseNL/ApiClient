@@ -63,7 +63,7 @@ class Connector
         if ($this->method === 'get' && count($this->apiMessage->getData()) > 0) {
             $url .= '?' . http_build_query($this->apiMessage->getData());
         }
-
+var_dump($url);
         $ch = curl_init();
 
         curl_setopt_array($ch, array(

@@ -193,4 +193,34 @@ class Client
         }
         return false;
     }
+
+    public function getLocationByGeoLocation(float $latitude, float $longitude, int $distance, $maxResults = 10, array $types = null ) {
+        if (empty($types)) {
+            $selectTypes = implode(',',['kinderdagverblijf', 'bso', 'gastouderopvang','gastouderbureau','peuterspeelzaal']);
+        }
+        else {
+            $selectTypes = implode(',', $types);
+        }
+
+
+        $message = new ApiMessage();
+        $message->setEndPoint('locations/bygeolocation/' . $latitude . '/' . $longitude);
+        $message->setData('type', $selectTypes);
+        $message->setData('distance', $distance);
+        $message->setData('maxresults', $maxResults);
+
+        $this->connector->setMessage($message);
+
+        $objects = [];
+        if ($this->connector->execute()) {
+            foreach($this->connector->getResponse()->getBody() as $data) {
+                $object = new \stdClass();
+                $object->location = LocationFactory::loadShort($data->location);
+                $object->distance = $data->distance;
+                $objects[] = $object;
+            }
+            return $objects;
+        }
+        return false;
+    }
 }
