@@ -62,7 +62,6 @@ class Client
         if ($this->connector->execute()) {
             $locations = [];
             foreach($this->connector->getResponse()->getBody() as $locationData) {
-
                 $locations[] = LocationFactory::loadShort($locationData);
             }
 
@@ -130,6 +129,15 @@ class Client
                 $locations[] = $location;
             }
             return $locations;
+        }
+        return false;
+    }
+
+    public function getLocationByLrkId($lrkId) {
+        $this->message->setEndPoint('lrk/' . $lrkId);
+        $this->connector->setMessage($this->message);
+        if ($this->connector->execute()) {
+            return LocationFactory::load($this->connector->getResponse()->getBody());
         }
         return false;
     }
